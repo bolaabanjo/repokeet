@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { ArrowRight, Loader2 } from 'lucide-react';
 import { isValidGitHubUrl } from '@/lib/utils';
-import { Logo } from '@/components/Logo';
 import { useAuth } from '@/hooks/useAuth';
 
 export default function Home() {
@@ -35,52 +34,8 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* Header */}
-      <header className="w-full px-6 py-4 flex items-center justify-between">
-        <Logo width={120} height={32} />
-
-        {loading ? (
-          <div className="h-10 w-28 rounded-full bg-muted/50 animate-pulse" />
-        ) : isSignedIn && user ? (
-          <button
-            onClick={() => signOut()}
-            className="flex items-center gap-2.5 h-10 pl-1.5 pr-4 rounded-full border border-border/50 hover:border-border hover:bg-muted/30 transition-colors"
-          >
-            {user.user_metadata?.avatar_url ? (
-              <Image
-                src={user.user_metadata.avatar_url}
-                alt="Avatar"
-                width={28}
-                height={28}
-                className="rounded-full"
-              />
-            ) : (
-              <div className="w-7 h-7 rounded-full bg-muted flex items-center justify-center text-xs font-medium">
-                {user.user_metadata?.full_name?.charAt(0) || user.email?.charAt(0) || '?'}
-              </div>
-            )}
-            <span className="text-sm">
-              {user.user_metadata?.full_name || user.user_metadata?.user_name || user.email?.split('@')[0]}
-            </span>
-          </button>
-        ) : (
-          <button
-            onClick={() => signInWithGitHub()}
-            className="flex items-center gap-2 h-10 px-4 text-sm rounded-full border border-border/50 hover:border-border hover:bg-muted/30 transition-colors"
-          >
-            <div className="relative w-4 h-4 dark:invert">
-              <Image
-                src="/github-mark.png"
-                alt="GitHub"
-                fill
-                className="object-contain"
-              />
-            </div>
-            Sign in
-          </button>
-        )}
-      </header>
+    <div className="flex-1 h-full flex flex-col">
+      {/* Header handled by AppShell */}
 
       {/* Hero */}
       <main className="flex-1 flex flex-col items-center justify-center px-6 py-12">
@@ -153,15 +108,7 @@ export default function Home() {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="w-full px-6 py-4">
-        <div className="flex items-center justify-between text-[10px] text-muted-foreground">
-          <span>Repokeet</span>
-          <span>
-            Free · <a href="https://github.com/bolaabanjo/repokeet" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground transition-colors">GitHub</a> · Built on <a href="https://cencori.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground transition-colors">Cencori</a>
-          </span>
-        </div>
-      </footer>
+      {/* Footer handled by AppShell */}
     </div>
   );
 }
